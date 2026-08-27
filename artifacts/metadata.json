@@ -1,0 +1,54 @@
+{
+  "model": "LightGBM",
+  "feature_names": [
+    "Age",
+    "Physical Examination",
+    "Adenopathy",
+    "T",
+    "N",
+    "Response"
+  ],
+  "best_params": {
+    "learning_rate": 0.1,
+    "max_depth": 7,
+    "n_estimators": 200,
+    "num_leaves": 31
+  },
+  "cv_auc": 0.9941930618401207,
+  "random_state": 42,
+  "test_size": 0.3,
+  "n_total": 335,
+  "n_train": 234,
+  "n_test": 101,
+  "recurred_train": 63,
+  "recurred_test": 27,
+  "metrics": {
+    "train": {
+      "Accuracy": 1.0,
+      "Precision": 1.0,
+      "Recall": 1.0,
+      "F1-score": 1.0,
+      "AUC": 1.0,
+      "Brier Score": 7.101783495363037e-07,
+      "AP": 0.9999999999999998,
+      "AUC_CI": [
+        0.9999999999999999,
+        1.0
+      ]
+    },
+    "test": {
+      "Accuracy": 0.9603960396039604,
+      "Precision": 1.0,
+      "Recall": 0.8518518518518519,
+      "F1-score": 0.92,
+      "AUC": 0.9904904904904905,
+      "Brier Score": 0.03643530720653082,
+      "AP": 0.9801187084520415,
+      "AUC_CI": [
+        0.9723073593073593,
+        1.0
+      ]
+    }
+  },
+  "trained_at": "2026-08-28 04:05:22"
+}
