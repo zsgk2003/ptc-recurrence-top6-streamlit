@@ -313,7 +313,7 @@ if page == "Single Prediction":
                 index=DEFAULT_OPTION_INDEX["Response"], help=FEATURE_HELP["Response"],
             )
 
-        submitted = st.form_submit_button("Predict", type="primary", width="stretch")
+        submitted = st.form_submit_button("Predict", type="primary", use_container_width=True)
 
     if submitted:
         record = {
@@ -386,7 +386,7 @@ if page == "Single Prediction":
                 "Encoded value": [record[f] for f in FEATURE_NAMES],
                 "Cohort median": [float(cohort[f].median()) for f in FEATURE_NAMES],
             })
-            st.dataframe(comp, width="stretch", hide_index=True)
+            st.dataframe(comp, use_container_width=True, hide_index=True)
 
         st.warning(
             "**Disclaimer**: for research and education only. This output cannot replace "
@@ -413,13 +413,13 @@ elif page == "Batch Prediction":
     c1, c2 = st.columns(2)
     c1.download_button(
         "Download CSV template", data=template.to_csv(index=False).encode("utf-8-sig"),
-        file_name="ptc_top6_template.csv", mime="text/csv", width="stretch",
+        file_name="ptc_top6_template.csv", mime="text/csv", use_container_width=True,
     )
     c2.download_button(
         f"Download test-set example ({len(test_df)} cases)",
         data=test_df[FEATURE_NAMES + ["Recurred"]].to_csv(index=False).encode("utf-8-sig"),
         file_name="ptc_top6_testset_example.csv", mime="text/csv",
-        width="stretch",
+        use_container_width=True,
     )
 
     uploaded = st.file_uploader("Upload CSV", type=["csv"])
@@ -436,7 +436,7 @@ elif page == "Batch Prediction":
             st.stop()
 
         st.success(f"Loaded {len(df_in)} records")
-        st.dataframe(df_in.head(10), width="stretch")
+        st.dataframe(df_in.head(10), use_container_width=True)
 
         probs = predict_proba(model, df_in)
         preds = (probs >= threshold).astype(int)
@@ -461,7 +461,7 @@ elif page == "Batch Prediction":
                 f"AUC = **{auc:.4f}**, accuracy = **{acc:.4f}** at threshold {threshold:.2f}."
             )
 
-        st.dataframe(result, width="stretch")
+        st.dataframe(result, use_container_width=True)
 
         fig = go.Figure(go.Histogram(x=probs, nbinsx=20, marker_color="#0891b2"))
         fig.add_vline(x=threshold, line_dash="dash", line_color="#dc2626",
@@ -476,7 +476,7 @@ elif page == "Batch Prediction":
             "Download results (CSV)",
             data=result.to_csv(index=False).encode("utf-8-sig"),
             file_name="ptc_top6_predictions.csv", mime="text/csv",
-            width="stretch",
+            use_container_width=True,
         )
 
 
@@ -591,7 +591,7 @@ elif page == "Model Performance":
             show.style.format("{:.4f}")
             .background_gradient(subset=["AUC", "Accuracy", "F1-score"], cmap="Greens")
             .background_gradient(subset=["Brier Score"], cmap="Reds_r"),
-            width="stretch",
+            use_container_width=True,
         )
         st.caption("LightGBM has the highest AUC on this feature set and is the model deployed here.")
 
@@ -641,11 +641,11 @@ else:
             {"Metric": key, "Test set": f"{test_metrics[key]:.4f}"}
             for key in ["AUC", "Accuracy", "Precision", "Recall", "F1-score", "Brier Score"]
         ])
-        st.dataframe(perf, width="stretch", hide_index=True)
+        st.dataframe(perf, use_container_width=True, hide_index=True)
         st.caption(f"Best hyper-parameters: `{meta.get('best_params')}`")
 
     st.markdown("### Features and encoding scheme")
-    st.dataframe(pd.DataFrame(encoding_table()), width="stretch", hide_index=True)
+    st.dataframe(pd.DataFrame(encoding_table()), use_container_width=True, hide_index=True)
 
     st.markdown("### Cohort distribution")
     feature_pick = st.selectbox(
